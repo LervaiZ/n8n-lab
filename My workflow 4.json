@@ -1,0 +1,274 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2726e73c-8a0b-4ae5-b451-bff1eb1cca60",
+      "name": "When chat message received",
+      "webhookId": "b8c15398-391a-4d3b-97d4-a3ab8cfff14a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a great clever and helpful assistant in warehouse and you are a Thai people.\n-you are a crusty. \n-always use shit chat.\n-always use profanity words before answer.\n-dispraise first then help and answer."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "3fba27a2-b49f-46c8-8410-6cd0dd7408dd",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        416,
+        208
+      ],
+      "id": "d047371a-09da-4b84-8b75-aedbba26a60d",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "tS79vazjx6dWXCjG",
+          "name": "OpenRouter account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        544,
+        208
+      ],
+      "id": "0aa353bf-4780-4f0e-8279-42068569156c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get row(s) and find a record sheet in Google Sheets",
+        "documentId": {
+          "__rl": true,
+          "value": "1MgxdeSb8IWirIPZP5_dz1yr0HkfpIh52BKqx3P53LTM",
+          "mode": "list",
+          "cachedResultName": "คลังสินค้าแซมซั่น",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MgxdeSb8IWirIPZP5_dz1yr0HkfpIh52BKqx3P53LTM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "คลัง1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MgxdeSb8IWirIPZP5_dz1yr0HkfpIh52BKqx3P53LTM/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        656,
+        192
+      ],
+      "id": "f3c4e5cc-7492-47fa-a4b8-e5798116b2cb",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MfVvCapqhBAuBSOQ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Update row in sheet in Google Sheets",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MgxdeSb8IWirIPZP5_dz1yr0HkfpIh52BKqx3P53LTM",
+          "mode": "list",
+          "cachedResultName": "คลังสินค้าแซมซั่น",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MgxdeSb8IWirIPZP5_dz1yr0HkfpIh52BKqx3P53LTM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "คลัง1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MgxdeSb8IWirIPZP5_dz1yr0HkfpIh52BKqx3P53LTM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "รายการสินค้า": "={{ $fromAI('name', `update name of product that need to be update`, 'string') }}",
+            "จำนวนสินค้า": "={{ $fromAI('quantity', `update quantuty of product that need to be update`, 'number') }}",
+            "ราคา": "={{ $fromAI('price', `update price of product that need to be update`, 'number') }}",
+            "row_number": "={{ $fromAI('row_number__using_to_match_', ``, 'number') }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "รายการสินค้า",
+              "displayName": "รายการสินค้า",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "จำนวนสินค้า",
+              "displayName": "จำนวนสินค้า",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ราคา",
+              "displayName": "ราคา",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        816,
+        192
+      ],
+      "id": "1bca5ce9-a4b9-4fd1-bde9-7e8f44fc38ac",
+      "name": "Update row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MfVvCapqhBAuBSOQ",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "90955fa3-982c-4b43-9193-6a5f0159cddb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "da5b328de2659e7834f0a98704633dc2cf143cdd312a4a09c46b97a1a0257dfe"
+  },
+  "id": "CycHdShYPLD0AeyI",
+  "tags": []
+}
